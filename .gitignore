@@ -1,0 +1,32 @@
+# Dependências de Nodes (Backend e Frontend)
+**/node_modules/
+dist/
+build/
+
+# Variáveis de Ambiente e Segredos (Segurança)
+.env
+.env.local
+.env.*.local
+
+# Logs do NPM e Erros
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Docker e Bancos de Dados Locais (Para não subir volumes do banco para o Git)
+.docker/
+**/data/db/
+postgres_data/
+mongo_data/
+
+# Sistema Operacional e IDEs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# MicroPython e Firmware (Arquivos temporários de build se houver)
+__pycache__/
+*.pyc
+.pycom/
