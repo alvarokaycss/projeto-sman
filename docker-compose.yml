@@ -13,6 +13,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./src/backend/database/init.sql:/docker-entrypoint-initdb.d/1-init.sql
+      - ./src/backend/database/seed.sql:/docker-entrypoint-initdb.d/2-seed.sql
 
   # Banco de Dados NoSQL (MongoDB para Telemetria)
   mongo_db:
