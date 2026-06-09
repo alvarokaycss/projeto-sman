@@ -13,6 +13,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./src/backend/database/init.sql:/docker-entrypoint-initdb.d/1-init.sql
+      - ./src/backend/database/seed.sql:/docker-entrypoint-initdb.d/2-seed.sql
 
   # Banco de Dados NoSQL (MongoDB para Telemetria)
   mongo_db:
@@ -59,6 +61,21 @@ services:
     depends_on:
       - backend
 
+  # Broker MQTT (Eclipse Mosquitto para comunicação IoT)
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: sman_mosquitto
+    ports:
+      - "1883:1883" # Porta padrão MQTT
+      - "9001:9001" # Porta para WebSockets (útil no futuro)
+    volumes:
+      - mosquitto_config:/mosquitto/config
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+
 volumes:
   postgres_data:
   mongo_data:
+  mosquitto_config:
+  mosquitto_data:
+  mosquitto_log:
