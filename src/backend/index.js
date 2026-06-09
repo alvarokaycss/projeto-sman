@@ -1,13 +1,22 @@
+// Arquivo principal do backend do SMAN
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
+// ============================================================================
+// Importa as rotas
+const configRoutes = require('./routes/configRoutes');
+// ============================================================================
+
+// Carrega variáveis de ambiente (Docker e desenvolvimento local)
 require('dotenv').config();
 
 // Importa as configurações de banco de dados
 const connectMongo = require('./config/mongoConfig');
 const pgPool = require('./config/pgConfig');
+
 // Inicializa aplicação Express
 const app = express();
+
 // Cria o servidor HTTP e o Socket.IO
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -15,8 +24,10 @@ const io = new Server(server, {
     origin: '*',
   }
 });
+
 // Middleware para parsear JSON
 app.use(express.json());
+
 // Função para inicializar conexões com os bancos de dados
 async function initDatabases() {
   await connectMongo();
@@ -40,6 +51,12 @@ app.get('/api/status', (req, res) => {
   });
 });
 
+// ============================================================================
+// Rotas de API
+// ============================================================================
+app.use('/api', configRoutes); 
+// ============================================================================
+
 // Conexão Socket.IO
 io.on('connection', (socket) => {
   console.log('Novo cliente conectado:', socket.id);
@@ -51,6 +68,6 @@ io.on('connection', (socket) => {
 // Inicia o servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor backend rodando na porta ${PORT}`);
+  console.log(`Servidor backend rodando na porta http://localhost:${PORT}`);
 });
 console.log('Backend do SMAN iniciado com sucesso!');
