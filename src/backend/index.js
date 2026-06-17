@@ -2,6 +2,7 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
+const initMqttService = require("./services/mqttService")
 // ============================================================================
 // Importa as rotas
 const configRoutes = require('./routes/configRoutes');
@@ -36,6 +37,9 @@ async function initDatabases() {
   try {
     await pgPool.query('SELECT NOW()');
     console.log('Conexão com PostgreSQL estabelecida com sucesso.');
+
+    // Inicializa o MQTT acessando o socket.IO
+    initMqttService(io);
   } catch (error) {
     console.error('Erro ao conectar com PostgreSQL:', error);
   }

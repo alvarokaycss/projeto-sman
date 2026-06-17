@@ -43,6 +43,7 @@ services:
       - PORT=3000
       - MONGO_URI=mongodb://sman_admin:sman_admin_password@mongo_db:27017/sman_telemetry?authSource=admin
       - POSTGRES_URI=postgresql://sman_user:sman_password@postgres_db:5432/sman_core
+      - MQTT_BROKER=mqtt://mosquitto:1883
     depends_on:
       - postgres_db
       - mongo_db
@@ -69,13 +70,12 @@ services:
       - "1883:1883" # Porta padrão MQTT
       - "9001:9001" # Porta para WebSockets (útil no futuro)
     volumes:
-      - mosquitto_config:/mosquitto/config
+      - ./src/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
       - mosquitto_data:/mosquitto/data
       - mosquitto_log:/mosquitto/log
 
 volumes:
   postgres_data:
   mongo_data:
-  mosquitto_config:
   mosquitto_data:
   mosquitto_log:
