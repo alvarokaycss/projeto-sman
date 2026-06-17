@@ -5,6 +5,7 @@ const { Server } = require('socket.io');
 // ============================================================================
 // Importa as rotas
 const configRoutes = require('./routes/configRoutes');
+const telemetriaRoutes = require('./routes/telemetriaRoutes');
 // ============================================================================
 
 // Carrega variáveis de ambiente (Docker e desenvolvimento local)
@@ -55,6 +56,8 @@ app.get('/api/status', (req, res) => {
 // Rotas de API
 // ============================================================================
 app.use('/api', configRoutes); 
+// INSERÇÃO DE DADOS MOCKADOS DE TELEMETRIA (POST)
+app.use('/api/', telemetriaRoutes);
 // ============================================================================
 
 // Conexão Socket.IO
