@@ -17,6 +17,12 @@ def conectar_wifi():
         timeout += 1
 
     if sta_if.isconnected():
+        # Força o uso do DNS do Google (8.8.8.8) para evitar falhas do provedor local (erro -202)
+        try:
+            config = sta_if.ifconfig()
+            sta_if.ifconfig((config[0], config[1], config[2], '8.8.8.8'))
+        except Exception:
+            pass
         print("\n[WIFI] Conectado com sucesso!")
         print("[WIFI] Configurações de rede:", sta_if.ifconfig())
     else:

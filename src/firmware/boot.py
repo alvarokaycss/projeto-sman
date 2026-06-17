@@ -1,4 +1,4 @@
-from services import wifi
+import wifi
 
 
 wifi.conectar_wifi()
