@@ -1,5 +1,6 @@
 import "./App.css";
 import { History } from "./components/History";
+import { GaugeChart } from "./components/Gauge";
 
 export function App() {
   return (

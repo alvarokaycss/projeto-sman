@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { GaugeComponent } from "react-gauge-component";
-import "./GaugeChart.css";
+import style from "./style.module.css";
 
-function GaugeChart({ value, min, max, metric, symbol }) {
+export function GaugeChart({ value, min, max, metric, symbol }) {
   const maxValue = Math.round(max * 1.33);
   const lowValue = Math.round((min * 100) / maxValue);
   const highValue = Math.round((max * 100) / maxValue);
@@ -25,8 +25,8 @@ function GaugeChart({ value, min, max, metric, symbol }) {
   }, []);
 
   return (
-    <div className="gauge-component">
-      <div className="gauge-chart">
+    <div className={style.gaugeComponent}>
+      <div className={style.gaugeChart}>
         {isVisible && (
           <GaugeComponent
             value={Math.round((value * 100) / maxValue)}
@@ -82,14 +82,14 @@ function GaugeChart({ value, min, max, metric, symbol }) {
             endAngle={90}
           />
         )}
-        <h1 className="gauge-label">
+        <h1 className={style.gaugeLabel}>
           {value !== undefined ? value.toFixed(1) : 0}
-          <span className="gauge-label-symbol">{symbol}</span>
+          <span className={style.gaugeLabelSymbol}>{symbol}</span>
         </h1>
       </div>
 
       <h1
-        className="metric-label"
+        className={style.metricLabel}
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -103,5 +103,3 @@ function GaugeChart({ value, min, max, metric, symbol }) {
     </div>
   );
 }
-
-export default GaugeChart;

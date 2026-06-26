@@ -1,11 +1,12 @@
-.gauge-component {
+.gaugeComponent {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 12em;
+  height: 100%;
+  width: 100%;
 }
 
-.gauge-chart {
+.gaugeChart {
   padding: 0;
   margin: 0;
   height: 6.6em;
@@ -16,14 +17,13 @@
   position: relative;
 }
 
-.gauge-chart svg {
+.gaugeChart svg {
   height: auto !important;
   transform: scale(1.09);
 }
 
-.gauge-label {
+.gaugeLabel {
   color: #240b2e;
-  background-color: #fff;
   font-family: "Unica One", sans-serif;
   font-size: 2rem;
   position: absolute;
@@ -35,13 +35,13 @@
   z-index: 10;
 }
 
-.gauge-label-symbol {
+.gaugeLabelSymbol {
   font-size: 1.2rem;
   margin-left: 0.2rem;
   font-weight: 800;
 }
 
-.metric-label {
+.metricLabel {
   color: #240b2e;
   margin: -0.2em;
   width: 100%;
