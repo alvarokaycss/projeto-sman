@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.body {
+  font-family: Arial, sans-serif;
+  font-size: 1.6rem;
+  color: #333;
+
+  background-color: #f3f4f6;
+}
