@@ -39,6 +39,27 @@ export function History() {
       message: "Temperatura atingiu 27°C.",
       time: "14:25",
     },
+    {
+      id: 6,
+      icon: "fa-solid fa-temperature-high",
+      title: "Aviso de Calor",
+      message: "Temperatura atingiu 27°C.",
+      time: "14:25",
+    },
+    {
+      id: 7,
+      icon: "fa-solid fa-temperature-high",
+      title: "Aviso de Calor",
+      message: "Temperatura atingiu 27°C.",
+      time: "14:25",
+    },
+    {
+      id: 8,
+      icon: "fa-solid fa-temperature-high",
+      title: "Aviso de Calor",
+      message: "Temperatura atingiu 27°C.",
+      time: "14:25",
+    },
   ]);
 
   return (

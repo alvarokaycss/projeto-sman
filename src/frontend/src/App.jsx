@@ -9,7 +9,9 @@ function App() {
           <div className="generalGauge">
             <div className="placeholder-gauge">Gauge Principal (1:1)</div>
           </div>
-          <History />
+          <div className="historyContainer">
+            <History />
+          </div>
         </section>
         <section className="specificSection">
           <div className="timelineChart">

@@ -1,6 +1,7 @@
 /* DESKTOP */
 
 .dashboard {
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: 1fr 3fr;
   gap: 16px;
@@ -19,12 +20,13 @@
 
 .generalSection {
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+
+  display: grid;
+  grid-template-rows: auto 1fr;
   gap: 16px;
 
   height: 100%;
+  min-height: 0;
 
   padding: 16px;
 
@@ -42,6 +44,14 @@
   aspect-ratio: 1/1;
 
   border-radius: 8px;
+
+  background-color: #f5339e;
+}
+
+.historyContainer {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
 
   background-color: #f5339e;
 }
@@ -99,27 +109,35 @@
 
 @media (max-width: 1024px) {
   .dashboard {
-    display: flex; /* Desativa o Grid de duas colunas laterais */
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 3fr;
 
-    height: auto;
+    height: 100vh;
 
     overflow: auto;
   }
 
   .generalSection {
-    display: flex;
-    flex-direction: row;
-    height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    gap: 16px;
+
+    height: auto;
+  }
+
+  .generalGauge {
+    height: 100%;
+
+    aspect-ratio: unset;
+  }
+
+  .specificSection {
+    grid-template-rows: 2fr 3fr;
   }
 
   .gaugesGrid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .history {
-    height: 350px !important;
-    flex-grow: 0 !important;
   }
 }
 
@@ -127,27 +145,37 @@
 
 @media (max-width: 768px) {
   .dashboard {
-    display: flex; /* Desativa o Grid de duas colunas laterais */
-    flex-direction: column; /* Empilha a barra lateral e a principal verticalmente */
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
 
     width: 100%;
     max-width: 100%;
-    height: auto; /* IMPORTANTE: Libera a altura para o usuário poder rolar o celular */
+    height: auto;
 
-    overflow: auto; /* Permite a rolagem da página inteira no celular */
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .generalSection {
-    height: auto; /* Libera a altura do bloco aqua */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 300px;
+    align-items: center;
+    gap: 16px;
+
+    height: auto;
   }
 
-  .gaugesGrid {
-    grid-template-columns: 1fr; /* No celular, fica apenas 1 velocímetro por linha */
+  .generalGauge {
+    height: 100%;
+
+    aspect-ratio: 1/1;
   }
 
-  .history {
-    height: 350px !important;
-    flex-grow: 0 !important;
+  .gauge {
+    height: 100%;
+
+    aspect-ratio: 1/1;
   }
 }
 
