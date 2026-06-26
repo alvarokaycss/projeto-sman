@@ -96,7 +96,7 @@
   min-height: 0;
 }
 
-.gauge {
+.gaugeContainer {
   display: flex;
   justify-content: center;
 
@@ -172,7 +172,7 @@
     aspect-ratio: 1/1;
   }
 
-  .gauge {
+  .gaugeContainer {
     height: 100%;
 
     aspect-ratio: 1/1;

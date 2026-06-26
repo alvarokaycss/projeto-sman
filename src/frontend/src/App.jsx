@@ -19,22 +19,22 @@ export function App() {
             <div className="placeholder-chart">Gráfico de Linha Temporal</div>
           </div>
           <div className="gaugesGrid">
-            <div className="gauge">
+            <div className="gaugeContainer">
               <div className="placeholder-gauge">Gauge 1</div>
             </div>
-            <div className="gauge">
+            <div className="gaugeContainer">
               <div className="placeholder-gauge">Gauge 2</div>
             </div>
-            <div className="gauge">
+            <div className="gaugeContainer">
               <div className="placeholder-gauge">Gauge 3</div>
             </div>
-            <div className="gauge">
+            <div className="gaugeContainer">
               <div className="placeholder-gauge">Gauge 4</div>
             </div>
-            <div className="gauge">
+            <div className="gaugeContainer">
               <div className="placeholder-gauge">Gauge 5</div>
             </div>
-            <div className="gauge">
+            <div className="gaugeContainer">
               <div className="placeholder-gauge">Gauge 6</div>
             </div>
           </div>
