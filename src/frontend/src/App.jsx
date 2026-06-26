@@ -1,7 +1,7 @@
-import { History } from "./components/History";
 import "./App.css";
+import { History } from "./components/History";
 
-function App() {
+export function App() {
   return (
     <>
       <main className="dashboard">
@@ -42,5 +42,3 @@ function App() {
     </>
   );
 }
-
-export default App;
