@@ -1,0 +1,152 @@
+/* DESKTOP */
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 16px;
+
+  width: 1200px;
+  max-width: 90%;
+  height: 100vh;
+
+  overflow: hidden;
+
+  margin: 0 auto;
+  padding: 16px;
+
+  background-color: #737f99;
+}
+
+.generalSection {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+
+  height: 100%;
+
+  padding: 16px;
+
+  border-radius: 16px;
+
+  background-color: aqua;
+}
+
+.generalGauge {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+
+  aspect-ratio: 1/1;
+
+  border-radius: 8px;
+
+  background-color: #f5339e;
+}
+
+.specificSection {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 16px;
+
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+
+  padding: 16px;
+
+  border-radius: 16px;
+
+  background-color: aqua;
+}
+
+.timelineChart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+  min-height: 0;
+
+  border-radius: 8px;
+
+  background-color: #f5339e;
+}
+
+.gaugesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+}
+
+.gauge {
+  display: flex;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background-color: #f5339e;
+}
+
+/* TABLETS */
+
+@media (max-width: 1024px) {
+  .dashboard {
+    display: flex; /* Desativa o Grid de duas colunas laterais */
+    flex-direction: column;
+
+    height: auto;
+
+    overflow: auto;
+  }
+
+  .generalSection {
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+  }
+
+  .gaugesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .history {
+    height: 350px !important;
+    flex-grow: 0 !important;
+  }
+}
+
+/* SMARTPHONES */
+
+@media (max-width: 768px) {
+  .dashboard {
+    display: flex; /* Desativa o Grid de duas colunas laterais */
+    flex-direction: column; /* Empilha a barra lateral e a principal verticalmente */
+
+    width: 100%;
+    max-width: 100%;
+    height: auto; /* IMPORTANTE: Libera a altura para o usuário poder rolar o celular */
+
+    overflow: auto; /* Permite a rolagem da página inteira no celular */
+  }
+
+  .generalSection {
+    height: auto; /* Libera a altura do bloco aqua */
+  }
+
+  .gaugesGrid {
+    grid-template-columns: 1fr; /* No celular, fica apenas 1 velocímetro por linha */
+  }
+
+  .history {
+    height: 350px !important;
+    flex-grow: 0 !important;
+  }
+}
