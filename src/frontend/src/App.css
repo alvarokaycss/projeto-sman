@@ -150,3 +150,31 @@
     flex-grow: 0 !important;
   }
 }
+
+/* Placeholder para os Gauges (Quadrado Perfeito) */
+.placeholder-gauge {
+  aspect-ratio: 1 / 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Placeholder para o Gráfico (Retângulo Fluido) */
+.placeholder-chart {
+  width: 100%;
+  height: 100%; /* Ocupa a altura máxima que a specificSection deu para ele */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #10b981, #047857);
+  color: white;
+  border-radius: 8px;
+  font-size: 1.1rem;
+}
