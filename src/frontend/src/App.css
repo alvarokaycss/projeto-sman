@@ -179,18 +179,6 @@
   }
 }
 
-/* Placeholder para os Gauges (Quadrado Perfeito) */
-.placeholder-gauge {
-  aspect-ratio: 1 / 1;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-  color: white;
-  box-sizing: border-box;
-  font-size: 0.9rem;
-  text-align: center;
 }
 
 /* Placeholder para o Gráfico (Retângulo Fluido) */

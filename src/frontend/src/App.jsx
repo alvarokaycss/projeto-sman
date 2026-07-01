@@ -8,7 +8,7 @@ export function App() {
       <main className="dashboard">
         <section className="generalSection">
           <div className="generalGauge">
-            <div className="placeholder-gauge">Gauge Principal (1:1)</div>
+            <GaugeChart value={20} max={100} min={0} metric={"Valor"} />
           </div>
           <div className="historyContainer">
             <History />
@@ -20,22 +20,22 @@ export function App() {
           </div>
           <div className="gaugesGrid">
             <div className="gaugeContainer">
-              <div className="placeholder-gauge">Gauge 1</div>
+              <GaugeChart value={10} max={100} min={0} metric={"Temperatura"} />
             </div>
             <div className="gaugeContainer">
-              <div className="placeholder-gauge">Gauge 2</div>
+              <GaugeChart value={10} max={100} min={0} metric={"Valor"} />
             </div>
             <div className="gaugeContainer">
-              <div className="placeholder-gauge">Gauge 3</div>
+              <GaugeChart value={10} max={100} min={0} metric={"Valor"} />
             </div>
             <div className="gaugeContainer">
-              <div className="placeholder-gauge">Gauge 4</div>
+              <GaugeChart value={10} max={100} min={0} metric={"Valor"} />
             </div>
             <div className="gaugeContainer">
-              <div className="placeholder-gauge">Gauge 5</div>
+              <GaugeChart value={10} max={100} min={0} metric={"Valor"} />
             </div>
             <div className="gaugeContainer">
-              <div className="placeholder-gauge">Gauge 6</div>
+              <GaugeChart value={10} max={100} min={0} metric={"Valor"} />
             </div>
           </div>
         </section>
