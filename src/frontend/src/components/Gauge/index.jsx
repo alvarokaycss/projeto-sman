@@ -29,6 +29,7 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
       <div className={style.gaugeChart}>
         {isVisible && (
           <GaugeComponent
+            style={{ overflow: "visible" }}
             value={Math.round((value * 100) / maxValue)}
             type="grafana"
             minValue={0}
@@ -58,7 +59,8 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
               baseColor: "#240b2e",
               strokeWidth: 4,
               strokeColor: "#240b2e",
-              animate: false,
+              animate: true,
+              animationDuration: 500,
             }}
             labels={{
               valueLabel: { hide: true },
@@ -88,14 +90,7 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
         </h1>
       </div>
 
-      <h1
-        className={style.metricLabel}
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "100%",
-        }}
-      >
+      <h1 className={style.metricLabel}>
         {metricLetters.map((char, index) => (
           <span key={index}>{char}</span>
         ))}
