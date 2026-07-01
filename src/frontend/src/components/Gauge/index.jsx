@@ -7,7 +7,6 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
   const lowValue = Math.round((min * 100) / maxValue);
   const highValue = Math.round((max * 100) / maxValue);
 
-  const metricLetters = String(metric || "").split("");
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
             minValue={0}
             maxValue={100}
             arc={{
-              width: 0.1,
+              width: 0.3,
               padding: 0,
               cornerRadius: 0,
               subArcs: [
@@ -46,21 +45,10 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
                 { color: "#e51b54" },
               ],
               padEndpoints: false,
-              outerArc: { width: 20, padding: 0 },
+              outerArc: { width: 7, padding: 0 },
               emptyColor: "#240b2e",
               subArcsStrokeWidth: 3.5,
               subArcsStrokeColor: "#240b2e",
-            }}
-            pointer={{
-              type: "needle",
-              color: "#240b2e",
-              length: 1.3,
-              width: 0.1,
-              baseColor: "#240b2e",
-              strokeWidth: 4,
-              strokeColor: "#240b2e",
-              animate: true,
-              animationDuration: 500,
             }}
             labels={{
               valueLabel: { hide: true },
@@ -70,7 +58,7 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
                 defaultTickLineConfig: {
                   color: "#240b2e",
                   length: 10,
-                  width: 3.5,
+                  width: 2.5,
                   hide: false,
                   distanceFromArc: 0,
                   distanceFromText: 0,
@@ -90,11 +78,7 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
         </h1>
       </div>
 
-      <h1 className={style.metricLabel}>
-        {metricLetters.map((char, index) => (
-          <span key={index}>{char}</span>
-        ))}
-      </h1>
+      <h1 className={style.metricLabel}>{metric}</h1>
     </div>
   );
 }
