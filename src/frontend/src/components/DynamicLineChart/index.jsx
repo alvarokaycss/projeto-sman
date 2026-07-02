@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
+import style from "./style.module.css"; // 🛠️ Importação do CSS Module
 
 const CustomPrismaDot = (props) => {
   const { cx, cy, fill } = props;
@@ -26,28 +27,8 @@ const CustomPrismaDot = (props) => {
 const CustomTooltip = ({ active, payload, label, linesConfig }) => {
   if (active && payload && payload.length) {
     return (
-      <div
-        style={{
-          fontFamily: "Unica One",
-          backgroundColor: "#fff",
-          padding: ".5em",
-          border: "2px solid #240b2e",
-          display: "flex",
-          flexDirection: "column",
-          boxShadow: "5px 5px",
-        }}
-      >
-        <p
-          style={{
-            margin: "0 0 .5em 0",
-            fontWeight: "bold",
-            alignSelf: "center",
-            fontSize: "1rem",
-            color: "#240b2e",
-          }}
-        >
-          {label}
-        </p>
+      <div className={style.tooltipContainer}>
+        <p className={style.tooltipTitle}>{label}</p>
         {payload.map((pld, index) => {
           const originalDataKey = pld.dataKey.replace("_normalized", "");
           const rawValue = pld.payload[originalDataKey];
@@ -60,12 +41,8 @@ const CustomTooltip = ({ active, payload, label, linesConfig }) => {
           return (
             <p
               key={index}
-              style={{
-                color: pld.color,
-                margin: "0 0 0 0",
-                fontSize: ".85em",
-                fontWeight: "800",
-              }}
+              className={style.tooltipLine}
+              style={{ color: pld.color }} // Mantido inline pois a cor é dinâmica (cada linha tem a sua)
             >
               {`${labelLimpa}: ${rawValue !== undefined ? rawValue : "N/A"}${simbolo}`}
             </p>
@@ -168,12 +145,7 @@ const DynamicLineChart = ({ data, linesConfig }) => {
           verticalAlign="top"
           align="center"
           onClick={handleLegendClick}
-          wrapperStyle={{
-            outline: "none",
-            paddingBottom: "2em",
-            fontFamily: "'Unica One', sans-serif",
-            fontWeight: "800",
-          }}
+          className={style.chartLegendWrapper} // 🛠️ Classe da Legenda aplicada via Recharts
         />
 
         <ReferenceLine y={UPPER_BOUND} stroke="red" strokeDasharray="4 4" />
