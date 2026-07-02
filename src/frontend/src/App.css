@@ -46,9 +46,9 @@
 
   border-radius: 8px;
 
-  font-size: 1.4rem;
-
   background-color: #f5339e;
+
+  container-type: inline-size;
 }
 
 .historyContainer {
@@ -105,9 +105,9 @@
 
   border-radius: 8px;
 
-  font-size: 1.4rem;
-
   background-color: #f5339e;
+
+  container-type: inline-size;
 }
 
 /* TABLETS */
@@ -134,8 +134,6 @@
   .generalGauge {
     height: 100%;
     max-height: 300px;
-
-    font-size: 2rem;
   }
 
   .historyContainer {
@@ -152,8 +150,6 @@
 
   .gaugeContainer {
     padding: 8px;
-
-    font-size: 2rem;
   }
 }
 
@@ -187,8 +183,6 @@
   .generalGauge {
     max-width: 450px;
     max-height: 300px;
-
-    font-size: 2.4rem;
   }
 
   .historyContainer {
@@ -200,7 +194,6 @@
   .gaugeContainer {
     padding: 8px;
     min-height: 150px;
-    font-size: 1.6rem;
   }
 }
 
