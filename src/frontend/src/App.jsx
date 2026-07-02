@@ -1,6 +1,7 @@
 import "./App.css";
 import { History } from "./components/History";
 import { GaugeChart } from "./components/Gauge";
+import DynamicLineChart from "./components/DynamicLineChart";
 
 export function App() {
   return (
@@ -14,10 +15,12 @@ export function App() {
             <History />
           </div>
         </section>
+
         <section className="specificSection">
           <div className="timelineChart">
-            <div className="placeholder-chart">Gráfico de Linha Temporal</div>
+            <DynamicLineChart data={mockChartData} linesConfig={linesConfig} />
           </div>
+
           <div className="gaugesGrid">
             <div className="gaugeContainer">
               <GaugeChart value={50} max={100} min={20} symbol={"C°"} metric={"Temperatura"} />

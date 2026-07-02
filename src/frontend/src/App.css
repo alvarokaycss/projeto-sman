@@ -86,7 +86,7 @@
 
   border-radius: 8px;
 
-  background-color: #f5339e;
+  background-color: #ffffff;
 }
 
 .gaugesGrid {
@@ -208,25 +208,23 @@
   .specificSection {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    min-width: 0;
   }
+
   .timelineChart {
-    min-height: 350px;
+    display: block;
+    width: 100%;
+    height: 280px !important;
+
+    min-width: 0;
+    flex-shrink: 0;
+    box-sizing: border-box;
   }
+
   .gaugesGrid {
+    display: grid;
     grid-template-columns: 1fr;
+    width: 100%;
   }
-}
-
-/* Placeholder para o Gráfico (Retângulo Fluido) */
-.placeholder-chart {
-  width: 100%;
-  height: 100%; /* Ocupa a altura máxima que a specificSection deu para ele */
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #10b981, #047857);
-  color: white;
-  border-radius: 8px;
-  font-size: 1.6rem;
 }
