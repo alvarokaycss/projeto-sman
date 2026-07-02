@@ -3,13 +3,26 @@ import { History } from "./components/History";
 import { GaugeChart } from "./components/Gauge";
 import DynamicLineChart from "./components/DynamicLineChart";
 
+// mock de dados
+import {
+  mockChartData,
+  linesConfig,
+  generalMediaConfig,
+} from "./dashboardMock";
+
 export function App() {
   return (
     <>
       <main className="dashboard">
         <section className="generalSection">
           <div className="generalGauge">
-            <GaugeChart value={21} max={100} min={0} metric={"MEDIA GERAL"} />
+            <GaugeChart
+              value={generalMediaConfig.currentValue}
+              max={generalMediaConfig.max}
+              min={generalMediaConfig.min}
+              metric={generalMediaConfig.label}
+              symbol={generalMediaConfig.symbol}
+            />
           </div>
           <div className="historyContainer">
             <History />
@@ -22,24 +35,17 @@ export function App() {
           </div>
 
           <div className="gaugesGrid">
-            <div className="gaugeContainer">
-              <GaugeChart value={50} max={100} min={20} symbol={"C°"} metric={"Temperatura"} />
-            </div>
-            <div className="gaugeContainer">
-              <GaugeChart value={10} max={100} min={0} metric={"Valor"} />
-            </div>
-            <div className="gaugeContainer">
-              <GaugeChart value={10} max={100} min={0} metric={"Valor"} />
-            </div>
-            <div className="gaugeContainer">
-              <GaugeChart value={10} max={100} min={0} metric={"Valor"} />
-            </div>
-            <div className="gaugeContainer">
-              <GaugeChart value={10} max={100} min={0} metric={"Valor"} />
-            </div>
-            <div className="gaugeContainer">
-              <GaugeChart value={10} max={100} min={0} metric={"Valor"} />
-            </div>
+            {linesConfig.map((sensor, index) => (
+              <div className="gaugeContainer" key={index}>
+                <GaugeChart
+                  value={sensor.currentValue}
+                  max={sensor.max}
+                  min={sensor.min}
+                  symbol={sensor.symbol}
+                  metric={sensor.label}
+                />
+              </div>
+            ))}
           </div>
         </section>
       </main>
