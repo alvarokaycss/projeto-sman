@@ -7,8 +7,8 @@ def conectar_wifi():
     sta_if = network.WLAN(network.STA_IF)
     sta_if.active(True)
 
-    # Conecta à rede simulada do Wokwi (ou credenciais locais futuras)
-    sta_if.connect('DTEL_ADAILTON', 'santos37611895')
+    # Conecta à rede portátil configurada
+    sta_if.connect('Alvaro', 'santos37611895')
 
     timeout = 0
     while not sta_if.isconnected() and timeout < 100:
