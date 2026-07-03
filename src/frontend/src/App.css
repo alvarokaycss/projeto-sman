@@ -1,0 +1,223 @@
+/* DESKTOP */
+
+.dashboard {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 16px;
+
+  width: 1200px;
+  max-width: 90%;
+  height: 100vh;
+
+  overflow: hidden;
+
+  margin: 0 auto;
+  padding: 16px;
+
+  background-color: #737f99;
+}
+
+.generalSection {
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 16px;
+
+  height: 100%;
+  min-height: 0;
+
+  padding: 16px;
+
+  border-radius: 16px;
+
+  background-color: aqua;
+}
+
+.generalGauge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+
+  aspect-ratio: 1/1;
+
+  border-radius: 8px;
+
+  background-color: #f5339e;
+
+  container-type: inline-size;
+}
+
+.historyContainer {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  background-color: #f5339e;
+}
+
+.specificSection {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 16px;
+
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+
+  padding: 16px;
+
+  border-radius: 16px;
+
+  background-color: aqua;
+}
+
+.timelineChart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+  min-height: 0;
+
+  border-radius: 8px;
+
+  background-color: #ffffff;
+}
+
+.gaugesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+}
+
+.gaugeContainer {
+  display: flex;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background-color: #f5339e;
+
+  container-type: inline-size;
+}
+
+/* TABLETS */
+
+@media (max-width: 1024px) {
+  .dashboard {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+
+    overflow: auto;
+  }
+
+  .generalSection {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: start;
+    gap: 16px;
+
+    height: min-content;
+  }
+
+  .generalGauge {
+    height: 100%;
+    max-height: 300px;
+  }
+
+  .historyContainer {
+    max-height: 300px;
+  }
+
+  .specificSection {
+    grid-template-rows: 2fr 3fr;
+  }
+
+  .gaugesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gaugeContainer {
+    padding: 8px;
+  }
+}
+
+/* SMARTPHONES */
+
+@media (max-width: 768px) {
+  .dashboard {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+
+    padding: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .generalSection {
+    display: flex;
+
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+
+    height: auto;
+  }
+
+  .generalGauge {
+    max-width: 450px;
+    max-height: 300px;
+  }
+
+  .historyContainer {
+    width: 100%;
+    height: 300px;
+    min-width: 0;
+  }
+
+  .gaugeContainer {
+    padding: 8px;
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 395px) {
+  .specificSection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .timelineChart {
+    display: block;
+    width: 100%;
+    height: 280px !important;
+
+    min-width: 0;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+
+  .gaugesGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+}

@@ -1,0 +1,60 @@
+.gaugeComponent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 0px;
+
+  font-size: 7cqw;
+}
+
+.gaugeChart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  overflow: visible;
+}
+
+.gaugeChart svg {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.gauge {
+  overflow: visible;
+}
+
+.gaugeLabel {
+  color: #240b2e;
+  font-family: "Unica One", sans-serif;
+  font-size: 2.5em;
+  position: absolute;
+  font-weight: 800;
+  top: 80.1%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  z-index: 10;
+}
+
+.gaugeLabelSymbol {
+  font-size: 0.6em;
+  margin-left: 0.32rem;
+  font-weight: 800;
+}
+
+.metricLabel {
+  color: #240b2e;
+  width: 100%;
+  font-size: 2em;
+  font-family: "Bebas Neue", sans-serif;
+  display: flex;
+  justify-content: center;
+}
