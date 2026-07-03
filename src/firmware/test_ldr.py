@@ -18,12 +18,12 @@ try:
     while True:
         valor_bruto = ldr_sensor.ler()
         porcentagem = ldr_sensor.porcentagem_luz()
-        
+
         print("-----------------------------------------")
         print("Leitura do Sensor LDR:")
         print("  - Valor Bruto (ADC 12-bits):", valor_bruto)
         print("  - Luminosidade Calculada  :", porcentagem, "%")
-        
+
         time.sleep(1.0)
 
 except KeyboardInterrupt:
