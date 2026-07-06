@@ -74,7 +74,7 @@ io.on('connection', (socket) => {
 
 // Inicia o servidor
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Servidor backend rodando na porta http://localhost:${PORT}`);
 });
 console.log('Backend do SMAN iniciado com sucesso!');
