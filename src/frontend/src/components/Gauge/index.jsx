@@ -63,7 +63,7 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
                   distanceFromArc: 0,
                   distanceFromText: 0,
                 },
-                ticks: [{ value: lowValue }, { value: highValue }],
+                ticks: [{ value: Math.round((value * 100) / maxValue) }],
                 hideMinMax: true,
                 autoSpaceTickLabels: false,
               },

@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
-import style from "./style.module.css"; // 🛠️ Importação do CSS Module
+import style from "./style.module.css";
 
 const CustomPrismaDot = (props) => {
   const { cx, cy, fill } = props;
@@ -42,7 +42,7 @@ const CustomTooltip = ({ active, payload, label, linesConfig }) => {
             <p
               key={index}
               className={style.tooltipLine}
-              style={{ color: pld.color }} // Mantido inline pois a cor é dinâmica (cada linha tem a sua)
+              style={{ color: pld.color }}
             >
               {`${labelLimpa}: ${rawValue !== undefined ? rawValue : "N/A"}${simbolo}`}
             </p>
@@ -145,7 +145,11 @@ const DynamicLineChart = ({ data, linesConfig }) => {
           verticalAlign="top"
           align="center"
           onClick={handleLegendClick}
-          className={style.chartLegendWrapper} // 🛠️ Classe da Legenda aplicada via Recharts
+          wrapperStyle={{
+            fontSize: "min(2rem, 125%)",
+            fontFamily: "Unica One, sans-serif",
+            fontWeight: "bolder"
+          }}
         />
 
         <ReferenceLine y={UPPER_BOUND} stroke="red" strokeDasharray="4 4" />
