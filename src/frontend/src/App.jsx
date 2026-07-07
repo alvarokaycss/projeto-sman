@@ -15,6 +15,7 @@ export function App() {
   const [chartData, setChartData] = useState([]);
   const [lines, setLines] = useState(linesConfig);
   const [generalMedia, setGeneralMedia] = useState(generalMediaConfig);
+  const [alertLogs, setAlertLogs] = useState([]);
 
   // useEffect para carregar as configurações de limite do banco de dados (PostgreSQL)
   useEffect(() => {
@@ -120,10 +121,47 @@ export function App() {
 
       // Atualiza o Gauge do Score Geral
       const alertaAtivo = data.alerta?.ativo ?? false;
-      const qtdGatilhos = data.alerta?.gatilhos?.length ?? 0;
+      const gatilhos = data.alerta?.gatilhos ?? [];
+      const qtdGatilhos = gatilhos.length;
       const scoreCalculado = alertaAtivo ? Math.max(10, 100 - qtdGatilhos * 25) : 100;
 
       setGeneralMedia((prev) => ({ ...prev, currentValue: scoreCalculado }));
+
+      // Adiciona os alertas no painel History
+      if (alertaAtivo && qtdGatilhos > 0) {
+        setAlertLogs((prevLogs) => {
+          const timestamp = data.timestamp ? new Date(data.timestamp) : new Date();
+          const timeLabel = timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+          const newLogs = gatilhos.map((gatilho, index) => {
+            // Mapeamento direto pelo campo 'parametro' gerado pelo backend (LeituraProcessada.js)
+            const parametro = gatilho.parametro || "";
+
+            const iconMap = {
+              Temperatura:  { icon: "fa-solid fa-temperature-high", title: "Alerta de Calor" },
+              Som:          { icon: "fa-solid fa-volume-high",      title: "Alerta de Ruído" },
+              Eco2:         { icon: "fa-solid fa-wind",             title: "Alerta de CO₂" },
+              Umidade:      { icon: "fa-solid fa-droplet",          title: "Alerta de Umidade" },
+              Luminosidade: { icon: "fa-solid fa-lightbulb",        title: "Alerta de Luminosidade" },
+            };
+
+            const { icon, title } = iconMap[parametro] ?? {
+              icon: "fa-solid fa-triangle-exclamation",
+              title: "Alerta de Monitoramento",
+            };
+
+            return {
+              id: `${timestamp.getTime()}-${index}`,
+              icon,
+              title,
+              message: gatilho.mensagem || "Alerta de limite excedido",
+              time: timeLabel,
+            };
+          });
+
+          return [...newLogs, ...prevLogs].slice(0, 15); // Mantém apenas os últimos 15 alertas
+        });
+      }
     });
 
     return () => {
@@ -145,7 +183,7 @@ export function App() {
             />
           </div>
           <div className="historyContainer">
-            <History />
+            <History logs={alertLogs} />
           </div>
         </section>
 

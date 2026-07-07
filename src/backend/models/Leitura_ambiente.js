@@ -27,6 +27,10 @@ const LeituraSchema = new mongoose.Schema({
         som: {
             decibeis: { type: Number, required: true }
         }
+    },
+    alerta: {
+        ativo: { type: Boolean, required: true, default: false },
+        gatilhos: [Object]
     }
 }, {
     // Evita a concorrência, toda leitura é única e imutável (novas leituras não atualizam as antigas)

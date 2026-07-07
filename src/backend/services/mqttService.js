@@ -41,19 +41,31 @@ const initMqttService = (io) => {
             }
 
             const configsSala = queryResult.rows[0];
-            const leituraDoAmbiente = new LeituraProcessada(payloadRaw, configsSala)
+            const leituraDoAmbiente = new LeituraProcessada(payloadRaw, configsSala);
+            leituraDoAmbiente.validarLimites(configsSala);
             const novaLeitura = new Leitura({
                 mac_address: leituraDoAmbiente.mac_address,
                 timestamp: leituraDoAmbiente.timestamp,
-                metricas: leituraDoAmbiente.metricas
+                metricas: leituraDoAmbiente.metricas,
+                alerta: leituraDoAmbiente.alerta
             });
 
             await novaLeitura.save();
             console.log(`Telemetria da Sala [${leituraDoAmbiente.sala}]`)
 
             // RF004: Transmite os dados em tempo real via Socket.IO
-            io.emit('dashboard:geral', leituraDoAmbiente);
-            io.emit(`dashboard:${leituraDoAmbiente.mac_address}`, leituraDoAmbiente);
+            const payload = {
+                mac_address: leituraDoAmbiente.mac_address,
+                sala: leituraDoAmbiente.sala,
+                timestamp: leituraDoAmbiente.timestamp,
+                metricas: leituraDoAmbiente.metricas,
+                alerta: leituraDoAmbiente.alerta
+            };
+
+            console.log('[ALERTA]', JSON.stringify(payload.alerta));
+
+            io.emit('dashboard:geral', payload);
+            io.emit(`dashboard:${payload.mac_address}`, payload);
             console.log(' Socket.IO: Dados transmitidos para os dashboards.');
 
         } catch (error) {

@@ -50,7 +50,7 @@ export const linesConfig = [
   {
     // Substituído: Pressão foi alterada para AQI
     dataKey: "aqi",
-    label: "Qualidade do Ar (AQI)",
+    label: "Qualidade do Ar",
     color: "#0bc0f2", 
     min: 1,
     max: 5,

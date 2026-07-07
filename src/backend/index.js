@@ -30,6 +30,14 @@ const io = new Server(server, {
 // Middleware para parsear JSON
 app.use(express.json());
 
+// Middleware para habilitar CORS para as rotas HTTP normais
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  next();
+});
+
 // Função para inicializar conexões com os bancos de dados
 async function initDatabases() {
   await connectMongo();
