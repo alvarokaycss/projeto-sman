@@ -16,6 +16,9 @@ export function App() {
   const [lines, setLines] = useState(linesConfig);
   const [generalMedia, setGeneralMedia] = useState(generalMediaConfig);
   const [alertLogs, setAlertLogs] = useState([]);
+  const [selectedProfile, setSelectedProfile] = useState("padrao");
+  const [latestGatilhos, setLatestGatilhos] = useState([]);
+
 
   // useEffect para carregar as configurações de limite do banco de dados (PostgreSQL)
   useEffect(() => {
@@ -59,6 +62,28 @@ export function App() {
         console.error("Erro ao buscar configurações de limite:", err);
       });
   }, []);
+
+  // useEffect para recalcular o Score Geral toda vez que o perfil ou os gatilhos mudarem
+  useEffect(() => {
+    const pesosMap = {
+      padrao: { Temperatura: 1.0, Som: 1.0, Eco2: 1.0, Umidade: 1.0, Luminosidade: 1.0 },
+      tea:    { Temperatura: 1.0, Som: 2.5, Eco2: 1.0, Umidade: 1.0, Luminosidade: 2.0 },
+      tdah:   { Temperatura: 1.0, Som: 2.0, Eco2: 2.5, Umidade: 1.0, Luminosidade: 1.0 },
+    };
+
+    const pesos = pesosMap[selectedProfile] || pesosMap.padrao;
+    let penalidadeTotal = 0;
+
+    latestGatilhos.forEach((gatilho) => {
+      const parametro = gatilho.parametro || "";
+      const peso = pesos[parametro] ?? 1.0;
+      // Penalização de 15 pontos base por sensor com inconformidade multiplicada pelo peso
+      penalidadeTotal += 15 * peso;
+    });
+
+    const scoreCalculado = Math.max(10, Math.round(100 - penalidadeTotal));
+    setGeneralMedia((prev) => ({ ...prev, currentValue: scoreCalculado }));
+  }, [selectedProfile, latestGatilhos]);
 
   // useEffect para conectar e escutar a telemetria em tempo real
   useEffect(() => {
@@ -119,16 +144,13 @@ export function App() {
         return novosDados;
       });
 
-      // Atualiza o Gauge do Score Geral
-      const alertaAtivo = data.alerta?.ativo ?? false;
+      // Atualiza a lista de gatilhos ativos para acionar o cálculo do Score Ponderado
       const gatilhos = data.alerta?.gatilhos ?? [];
-      const qtdGatilhos = gatilhos.length;
-      const scoreCalculado = alertaAtivo ? Math.max(10, 100 - qtdGatilhos * 25) : 100;
-
-      setGeneralMedia((prev) => ({ ...prev, currentValue: scoreCalculado }));
+      const alertaAtivo = data.alerta?.ativo ?? false;
+      setLatestGatilhos(gatilhos);
 
       // Adiciona os alertas no painel History
-      if (alertaAtivo && qtdGatilhos > 0) {
+      if (alertaAtivo && gatilhos.length > 0) {
         setAlertLogs((prevLogs) => {
           const timestamp = data.timestamp ? new Date(data.timestamp) : new Date();
           const timeLabel = timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -138,11 +160,11 @@ export function App() {
             const parametro = gatilho.parametro || "";
 
             const iconMap = {
-              Temperatura:  { icon: "fa-solid fa-temperature-high", title: "Alerta de Calor" },
-              Som:          { icon: "fa-solid fa-volume-high",      title: "Alerta de Ruído" },
-              Eco2:         { icon: "fa-solid fa-wind",             title: "Alerta de CO₂" },
-              Umidade:      { icon: "fa-solid fa-droplet",          title: "Alerta de Umidade" },
-              Luminosidade: { icon: "fa-solid fa-lightbulb",        title: "Alerta de Luminosidade" },
+              Temperatura:  { icon: "fa-solid fa-temperature-high", title: "ALERTA DE CALOR" },
+              Som:          { icon: "fa-solid fa-volume-high",      title: "ALERTA DE RUÍDO" },
+              Eco2:         { icon: "fa-solid fa-wind",             title: "ALERTA DE CO₂" },
+              Umidade:      { icon: "fa-solid fa-droplet",          title: "ALERTA DE UMIDADE" },
+              Luminosidade: { icon: "fa-solid fa-lightbulb",        title: "ALERTA DE LUMINOSIDADE" },
             };
 
             const { icon, title } = iconMap[parametro] ?? {
@@ -159,7 +181,7 @@ export function App() {
             };
           });
 
-          return [...newLogs, ...prevLogs].slice(0, 15); // Mantém apenas os últimos 15 alertas
+          return [...newLogs, ...prevLogs].slice(0, 5); // Mantém apenas os últimos 5 alertas
         });
       }
     });
@@ -173,6 +195,18 @@ export function App() {
     <>
       <main className="dashboard">
         <section className="generalSection">
+          <div className="profileSelector">
+            <label htmlFor="profile-select">PERFIL SENSORIAL:</label>
+            <select
+              id="profile-select"
+              value={selectedProfile}
+              onChange={(e) => setSelectedProfile(e.target.value)}
+            >
+              <option value="padrao">Padrão</option>
+              <option value="tea">TEA - Hipersensibilidade</option>
+              <option value="tdah">TDAH - Foco</option>
+            </select>
+          </div>
           <div className="generalGauge">
             <GaugeChart
               value={generalMedia.currentValue}

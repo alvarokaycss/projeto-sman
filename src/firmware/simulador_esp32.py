@@ -90,7 +90,7 @@ def run():
             else:
                 print(f"❌ Falha ao enviar mensagem para o tópico {TOPIC}")
 
-            time.sleep(5)  # Envia a cada 5 segundos respeitando os critérios de tempo real
+            time.sleep(3)  # Envia a cada 3 segundos respeitando os critérios de tempo real
 
     except KeyboardInterrupt:
         print("\n🛑 Simulador encerrado pelo usuário.")

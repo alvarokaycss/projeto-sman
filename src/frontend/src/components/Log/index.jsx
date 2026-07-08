@@ -10,7 +10,7 @@ export function Log({ icon, title, message, time }) {
           <h3>{title}</h3>
           <span className={styles.time}>{time}</span> {/* Horário do evento */}
         </div>
-        <p>{message}</p>
+        <p className={styles.textMessage}>{message.toUpperCase()}</p>
       </div>
     </div>
   );

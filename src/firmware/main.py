@@ -184,7 +184,7 @@ try:
 
         # Executa leitura apenas no intervalo configurado
         tempo_atual = time.time()
-        if tempo_atual - ultimo_envio >= INTERVALO_LEITURA:
+        if tempo_atual - ultimo_envio >= INTERVALO_LEITURA: # A esp32 fica livre para detectar quedas de wifi entre os 5 segundos
             uptime += INTERVALO_LEITURA
             ultimo_envio = tempo_atual
             

@@ -40,7 +40,7 @@ class LeituraProcessada {
                 parametro: 'Temperatura',
                 valor: tempAtual,
                 limite: configsSala.temp_max,
-                mensagem: 'Temperatura acima do limite de conforto!'
+                mensagem: 'Temperatura acima da faixa recomendada. Ajuste a climatização do ambiente ou aumente a ventilação natural, quando possível.'
             });
         }
         if (configsSala.temp_min && tempAtual < configsSala.temp_min) {
@@ -49,7 +49,7 @@ class LeituraProcessada {
                 parametro: 'Temperatura',
                 valor: tempAtual,
                 limite: configsSala.temp_min,
-                mensagem: 'Temperatura abaixo do limite de conforto!'
+                mensagem: 'Temperatura abaixo da faixa recomendada. Ajuste a climatização para manter uma condição mais confortável.'
             });
         }
 
@@ -60,7 +60,7 @@ class LeituraProcessada {
                 parametro: 'Som',
                 valor: somAtual,
                 limite: configsSala.som_max,
-                mensagem: 'Nível de som alto (Risco de sobrecarga sensorial)!'
+                mensagem: 'Recomendado reduzir as fontes de ruído e manter portas e janelas fechadas quando houver barulho externo.'
             });
         }
 
@@ -71,7 +71,7 @@ class LeituraProcessada {
                 parametro: 'Eco2',
                 valor: eco2Atual,
                 limite: configsSala.eco2_max,
-                mensagem: 'Nível de CO2 elevado! Necessário ventilar o ambiente.'
+                mensagem: 'Concentração de CO₂ elevada. Recomenda-se aumentar a circulação de ar abrindo portas ou janelas, ou utilizar ventilação mecânica adequada.'
             });
         }
 
@@ -82,7 +82,17 @@ class LeituraProcessada {
                 parametro: 'Umidade',
                 valor: umidAtual,
                 limite: configsSala.umid_max,
-                mensagem: 'Umidade acima do limite ideal!'
+                mensagem: 'Umidade acima da faixa recomendada. Verifique a ventilação do ambiente e reduza fontes de umidade, quando possível.'
+            });
+        }
+        
+        if (configsSala.umid_min && umidAtual < configsSala.umid_min) {
+            this.alerta.ativo = true;
+            this.alerta.gatilhos.push({
+                parametro: 'Umidade',
+                valor: umidAtual,
+                limite: configsSala.umid_min,
+                mensagem: 'Umidade abaixo da faixa recomendada. Sempre que possível, aumente a ventilação adequada ou utilize um umidificador de ar.'
             });
         }
 
@@ -93,7 +103,7 @@ class LeituraProcessada {
                 parametro: 'Luminosidade',
                 valor: luzAtual,
                 limite: configsSala.luminosidade_max,
-                mensagem: 'Ambiente excessivamente claro / Ofuscamento visual!'
+                mensagem: 'Iluminação acima da faixa recomendada. Reduza a intensidade da iluminação ou utilize cortinas e persianas para diminuir a incidência de luz.'
             });
         }
     }

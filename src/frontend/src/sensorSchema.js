@@ -5,7 +5,7 @@ export const generalMediaConfig = {
   currentValue: 100,
   min: 0,
   max: 100,
-  label: "SCORE GERAL",
+  label: "Nível de Conforto",
   symbol: "%",
 };
 
