@@ -6,10 +6,7 @@ import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 
 // Importações dos metadados e do score inicial
-import {
-  linesConfig,
-  generalMediaConfig,
-} from "./sensorSchema";
+import { linesConfig, generalMediaConfig } from "./sensorSchema";
 
 export function App() {
   const [chartData, setChartData] = useState([]);
@@ -23,7 +20,9 @@ export function App() {
   // useEffect para carregar as configurações de limite do banco de dados (PostgreSQL)
   useEffect(() => {
     const macDispositivo = "b4:bf:e9:0e:0c:08";
-    fetch(`http://${window.location.hostname}:3000/api/config/${macDispositivo}`)
+    fetch(
+      `http://${window.location.hostname}:3000/api/config/${macDispositivo}`,
+    )
       .then((res) => {
         if (!res.ok) {
           throw new Error("Erro ao buscar configurações");
@@ -55,7 +54,7 @@ export function App() {
             }
 
             return { ...sensor, min: limiteMin, max: limiteMax };
-          })
+          }),
         );
       })
       .catch((err) => {
@@ -66,9 +65,27 @@ export function App() {
   // useEffect para recalcular o Score Geral toda vez que o perfil ou os gatilhos mudarem
   useEffect(() => {
     const pesosMap = {
-      padrao: { Temperatura: 1.0, Som: 1.0, Eco2: 1.0, Umidade: 1.0, Luminosidade: 1.0 },
-      tea:    { Temperatura: 1.0, Som: 2.5, Eco2: 1.0, Umidade: 1.0, Luminosidade: 2.0 },
-      tdah:   { Temperatura: 1.0, Som: 2.0, Eco2: 2.5, Umidade: 1.0, Luminosidade: 1.0 },
+      padrao: {
+        Temperatura: 1.0,
+        Som: 1.0,
+        Eco2: 1.0,
+        Umidade: 1.0,
+        Luminosidade: 1.0,
+      },
+      tea: {
+        Temperatura: 1.0,
+        Som: 2.5,
+        Eco2: 1.0,
+        Umidade: 1.0,
+        Luminosidade: 2.0,
+      },
+      tdah: {
+        Temperatura: 1.0,
+        Som: 2.0,
+        Eco2: 2.5,
+        Umidade: 1.0,
+        Luminosidade: 1.0,
+      },
     };
 
     const pesos = pesosMap[selectedProfile] || pesosMap.padrao;
@@ -116,7 +133,7 @@ export function App() {
           else if (sensor.dataKey === "aqi") valorAtualizado = aqi;
 
           return { ...sensor, currentValue: valorAtualizado };
-        })
+        }),
       );
 
       // Atualiza o gráfico de linha histórico em tempo real
@@ -152,19 +169,36 @@ export function App() {
       // Adiciona os alertas no painel History
       if (alertaAtivo && gatilhos.length > 0) {
         setAlertLogs((prevLogs) => {
-          const timestamp = data.timestamp ? new Date(data.timestamp) : new Date();
-          const timeLabel = timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+          const timestamp = data.timestamp
+            ? new Date(data.timestamp)
+            : new Date();
+          const timeLabel = timestamp.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
 
           const newLogs = gatilhos.map((gatilho, index) => {
             // Mapeamento direto pelo campo 'parametro' gerado pelo backend (LeituraProcessada.js)
             const parametro = gatilho.parametro || "";
 
             const iconMap = {
-              Temperatura:  { icon: "fa-solid fa-temperature-high", title: "ALERTA DE CALOR" },
-              Som:          { icon: "fa-solid fa-volume-high",      title: "ALERTA DE RUÍDO" },
-              Eco2:         { icon: "fa-solid fa-wind",             title: "ALERTA DE CO₂" },
-              Umidade:      { icon: "fa-solid fa-droplet",          title: "ALERTA DE UMIDADE" },
-              Luminosidade: { icon: "fa-solid fa-lightbulb",        title: "ALERTA DE LUMINOSIDADE" },
+              Temperatura: {
+                icon: "fa-solid fa-temperature-high",
+                title: "ALERTA DE CALOR",
+              },
+              Som: {
+                icon: "fa-solid fa-volume-high",
+                title: "ALERTA DE RUÍDO",
+              },
+              Eco2: { icon: "fa-solid fa-wind", title: "ALERTA DE CO₂" },
+              Umidade: {
+                icon: "fa-solid fa-droplet",
+                title: "ALERTA DE UMIDADE",
+              },
+              Luminosidade: {
+                icon: "fa-solid fa-lightbulb",
+                title: "ALERTA DE LUMINOSIDADE",
+              },
             };
 
             const { icon, title } = iconMap[parametro] ?? {
@@ -203,17 +237,17 @@ export function App() {
         <div
           className={`profileSelector ${isProfileOpen ? "profileOpen" : ""}`}
         >
-            <label htmlFor="profile-select">PERFIL SENSORIAL:</label>
-            <select
-              id="profile-select"
-              value={selectedProfile}
-              onChange={(e) => setSelectedProfile(e.target.value)}
-            >
-              <option value="padrao">Padrão</option>
-              <option value="tea">TEA - Hipersensibilidade</option>
-              <option value="tdah">TDAH - Foco</option>
-            </select>
-          </div>
+          <label htmlFor="profile-select">PERFIL SENSORIAL:</label>
+          <select
+            id="profile-select"
+            value={selectedProfile}
+            onChange={(e) => setSelectedProfile(e.target.value)}
+          >
+            <option value="padrao">Padrão</option>
+            <option value="tea">TEA - Hipersensibilidade</option>
+            <option value="tdah">TDAH - Foco</option>
+          </select>
+        </div>
       </header>
       <main className="dashboard">
         <section className="generalSection">
