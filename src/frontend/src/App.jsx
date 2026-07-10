@@ -18,7 +18,7 @@ export function App() {
   const [alertLogs, setAlertLogs] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState("padrao");
   const [latestGatilhos, setLatestGatilhos] = useState([]);
-
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   // useEffect para carregar as configurações de limite do banco de dados (PostgreSQL)
   useEffect(() => {
@@ -193,9 +193,16 @@ export function App() {
 
   return (
     <>
-      <main className="dashboard">
-        <section className="generalSection">
-          <div className="profileSelector">
+      <header>
+        <button
+          className="profileToggleBtn"
+          onClick={() => setIsProfileOpen(!isProfileOpen)}
+        >
+          <i className="fa-solid fa-sliders"></i>
+        </button>
+        <div
+          className={`profileSelector ${isProfileOpen ? "profileOpen" : ""}`}
+        >
             <label htmlFor="profile-select">PERFIL SENSORIAL:</label>
             <select
               id="profile-select"
@@ -207,6 +214,9 @@ export function App() {
               <option value="tdah">TDAH - Foco</option>
             </select>
           </div>
+      </header>
+      <main className="dashboard">
+        <section className="generalSection">
           <div className="generalGauge">
             <GaugeChart
               value={generalMedia.currentValue}
