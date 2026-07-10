@@ -31,7 +31,7 @@ export const linesConfig = [
   },
   {
     dataKey: "co2",
-    label: "CO₂",
+    label: "Nível de CO₂",
     color: "#52ff58",
     min: 400,
     max: 1500,

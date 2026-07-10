@@ -202,10 +202,11 @@ export function App() {
               value={selectedProfile}
               onChange={(e) => setSelectedProfile(e.target.value)}
             >
-              <option value="padrao">Padrão</option>
-              <option value="tea">TEA - Hipersensibilidade</option>
-              <option value="tdah">TDAH - Foco</option>
+              <option value="padrao">PADRÃO</option>
+              <option value="tea">TEA - HIPERSENSIBILIDADE</option>
+              <option value="tdah">TDAH - FOCO</option>
             </select>
+            <p className="profileMessage" >Ajusta o nível de conforto de acordo com o perfil sensorial selecionado.</p>
           </div>
           <div className="generalGauge">
             <GaugeChart
