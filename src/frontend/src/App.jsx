@@ -4,9 +4,21 @@ import { GaugeChart } from "./components/Gauge";
 import DynamicLineChart from "./components/DynamicLineChart";
 import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
+import { ConfigForm } from "./components/MetricForm";
 
 // Importações dos metadados e do score inicial
 import { linesConfig, generalMediaConfig } from "./sensorSchema";
+
+const mockConfig = {
+  temp_min: 18,
+  temp_max: 26,
+  umid_min: 40,
+  umid_max: 60,
+  luminosidade_min: 300,
+  luminosidade_max: 800,
+  eco2_max: 1000,
+  som_max: 65,
+};
 
 export function App() {
   const [chartData, setChartData] = useState([]);
@@ -15,6 +27,7 @@ export function App() {
   const [alertLogs, setAlertLogs] = useState([]);
   const [selectedProfile, setSelectedProfile] = useState("padrao");
   const [latestGatilhos, setLatestGatilhos] = useState([]);
+  const [currentConfig, setCurrentConfig] = useState(mockConfig);
 
   // useEffect para carregar as configurações de limite do banco de dados (PostgreSQL)
   useEffect(() => {
@@ -226,6 +239,7 @@ export function App() {
 
   return (
     <>
+      <ConfigForm currentConfig={currentConfig} />
       <main className="dashboard">
         <section className="generalSection">
           <div className="profileSelector">

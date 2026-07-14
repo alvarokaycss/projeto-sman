@@ -1,0 +1,249 @@
+.floatingButton {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+
+  width: 56px;
+  height: 56px;
+
+  border-radius: 10px;
+  background-color: #fed766;
+  border: 5px solid black;
+  box-shadow: -4px 4px black;
+
+  cursor: pointer;
+  font-size: 24px;
+  color: black;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:
+    transform 0s ease,
+    box-shadow 0s ease;
+}
+
+.floatingButton:active {
+  transform: translate(-4px, 4px);
+  box-shadow: 0px 0px black;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 9999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: #eff0ea;
+  border: 5px solid black;
+  border-radius: 10px;
+  box-shadow: -8px 8px black;
+
+  padding: 24px;
+  width: 90%;
+  max-width: 550px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.headerModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "Unica One", sans-serif;
+  font-size: 24px;
+  color: black;
+
+  border-bottom: 4px solid black;
+  padding-bottom: 12px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.metricRow {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 8px 12px;
+  border: 4px solid black;
+  border-radius: 8px;
+  box-shadow: 0px 4px black;
+  gap: 12px;
+}
+
+.metricName {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: bolder;
+  font-size: 2.5rem;
+  color: black;
+  width: 55px;
+  flex-shrink: 0;
+  letter-spacing: 2px;
+}
+
+.metricRow label {
+  font-family: "Unica One", sans-serif;
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: black;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.metricRow input {
+  font-family: "Roboto Mono", monospace;
+  font-size: 1.8rem;
+  font-weight: bold;
+  flex: 1;
+  min-width: 40px;
+  padding: 4px 6px;
+  border: 3px solid black;
+  border-radius: 6px;
+  outline: none;
+  background-color: transparent;
+  color: black;
+  text-align: center;
+}
+
+.metricRow input::-webkit-outer-spin-button,
+.metricRow input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.metricRow input::placeholder {
+  color: #aaa;
+}
+
+.slash {
+  font-family: "Unica One", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  flex-shrink: 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.confirmButton,
+.cancelButton,
+.closeActionButton {
+  color: black;
+  font-family: "Unica One", sans-serif;
+  font-weight: bold;
+  font-size: 1.8rem;
+
+  padding: 10px 24px;
+  border: 4px solid black;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: -3px 3px black;
+  transition:
+    transform 0s ease,
+    box-shadow 0s ease;
+}
+
+.confirmButton {
+  background-color: #d68fd6;
+}
+
+.cancelButton {
+  background-color: white;
+}
+
+.closeActionButton {
+  background-color: #ff4d4d;
+}
+
+.confirmButton:active,
+.cancelButton:active,
+.closeActionButton:active {
+  transform: translate(-3px, 3px);
+  box-shadow: 0 0 black;
+}
+
+/* TABLETS */
+@media (max-width: 1024px) {
+  .floatingButton {
+    top: auto;
+    bottom: 16px;
+    left: auto;
+    right: 16px;
+  }
+}
+
+/* SMARTPHONES*/
+
+@media (max-width: 768px) {
+  .headerModal h2 {
+    font-size: 3rem;
+  }
+
+  .metricRow {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .confirmButton,
+  .cancelButton,
+  .closeActionButton {
+    width: 100%;
+  }
+
+  .metricName {
+    font-size: 2rem;
+  }
+  .metricRow label {
+    font-size: 1.25rem;
+  }
+  .metricRow input {
+    font-size: 1.5rem;
+  }
+}
+
+/* TELAS MUITO PEQUENAS (até 350px) */
+@media (max-width: 350px) {
+  .metricRow {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .metricName {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+}
