@@ -29,7 +29,7 @@ export function App() {
   const [latestGatilhos, setLatestGatilhos] = useState([]);
   const [currentConfig, setCurrentConfig] = useState(mockConfig);
 
-  // useEffect para carregar as configurações de limite do banco de dados (PostgreSQL)
+  // UseEffect para carregar as configurações de limite do Postgres
   useEffect(() => {
     const macDispositivo = "b4:bf:e9:0e:0c:08";
     fetch(
@@ -44,35 +44,40 @@ export function App() {
       .then((config) => {
         console.log("Configurações de limites carregadas do Postgres:", config);
 
-        setLines((prevLines) =>
-          prevLines.map((sensor) => {
-            let limiteMin = sensor.min;
-            let limiteMax = sensor.max;
-
-            // Mapeia as chaves correspondentes do banco PostgreSQL
-            if (sensor.dataKey === "temperatura") {
-              limiteMin = config.temp_min ?? sensor.min;
-              limiteMax = config.temp_max ?? sensor.max;
-            } else if (sensor.dataKey === "umidade") {
-              limiteMin = config.umid_min ?? sensor.min;
-              limiteMax = config.umid_max ?? sensor.max;
-            } else if (sensor.dataKey === "co2") {
-              limiteMax = config.eco2_max ?? sensor.max;
-            } else if (sensor.dataKey === "ruido") {
-              limiteMax = config.som_max ?? sensor.max;
-            } else if (sensor.dataKey === "luminosidade") {
-              limiteMin = config.luminosidade_min ?? sensor.min;
-              limiteMax = config.luminosidade_max ?? sensor.max;
-            }
-
-            return { ...sensor, min: limiteMin, max: limiteMax };
-          }),
-        );
+        // Atualiza o estado da config atual para alimentar os placeholders do formulário!
+        setCurrentConfig(config);
       })
       .catch((err) => {
         console.error("Erro ao buscar configurações de limite:", err);
       });
   }, []);
+
+  // UseEffect para sincronizar os limites dos Gauges e Gráficos sempre que a configuração mudar
+  useEffect(() => {
+    setLines((prevLines) =>
+      prevLines.map((sensor) => {
+        let limiteMin = sensor.min;
+        let limiteMax = sensor.max;
+
+        if (sensor.dataKey === "temperatura") {
+          limiteMin = currentConfig.temp_min ?? sensor.min;
+          limiteMax = currentConfig.temp_max ?? sensor.max;
+        } else if (sensor.dataKey === "umidade") {
+          limiteMin = currentConfig.umid_min ?? sensor.min;
+          limiteMax = currentConfig.umid_max ?? sensor.max;
+        } else if (sensor.dataKey === "co2") {
+          limiteMax = currentConfig.eco2_max ?? sensor.max;
+        } else if (sensor.dataKey === "ruido") {
+          limiteMax = currentConfig.som_max ?? sensor.max;
+        } else if (sensor.dataKey === "luminosidade") {
+          limiteMin = currentConfig.luminosidade_min ?? sensor.min;
+          limiteMax = currentConfig.luminosidade_max ?? sensor.max;
+        }
+
+        return { ...sensor, min: limiteMin, max: limiteMax };
+      }),
+    );
+  }, [currentConfig]); // Executa toda vez que currentConfig for alterado
 
   // useEffect para recalcular o Score Geral toda vez que o perfil ou os gatilhos mudarem
   useEffect(() => {
@@ -237,12 +242,47 @@ export function App() {
     };
   }, []);
 
+  // Função para salvar as configurações
+  const handleSaveConfig = (payload) => {
+    const macDispositivo = "b4:bf:e9:0e:0c:08"; // MAC da ESP32
+
+    fetch(
+      `http://${window.location.hostname}:3000/api/config/${macDispositivo}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      },
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Erro ao salvar as configurações");
+        }
+        return res.json();
+      })
+      .then((dadosAtualizados) => {
+        console.log(
+          "Configurações salvas no Postgres com sucesso!",
+          dadosAtualizados,
+        );
+
+        // Atualizando estado React para refletir os dados.
+        setCurrentConfig((prev) => ({ ...prev, ...payload }));
+      })
+      .catch((err) => {
+        console.error("Falha ao salvar limites no servidor:", err);
+      });
+  };
+
   return (
     <>
       <ConfigForm
         currentConfig={currentConfig}
         selectedProfile={selectedProfile}
         setSelectedProfile={setSelectedProfile}
+        onConfirm={handleSaveConfig}
       />
       <main className="dashboard">
         <section className="generalSection">

@@ -64,9 +64,6 @@ export function ConfigForm({
     } else {
       document.body.style.overflow = "";
     }
-
-    // Função de limpeza (cleanup) do React.
-    // Garante que, se o componente sumir da tela por algum motivo, a rolagem seja devolvida ao usuário!
     return () => {
       document.body.style.overflow = "";
     };
@@ -107,7 +104,6 @@ export function ConfigForm({
                 </p>
               </div>
 
-              {/* Linha divisória neo-brutalista opcional */}
               <hr className={styles.separator} />
 
               <div className={styles.inputGroup}>
