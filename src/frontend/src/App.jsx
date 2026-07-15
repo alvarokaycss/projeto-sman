@@ -239,25 +239,13 @@ export function App() {
 
   return (
     <>
-      <ConfigForm currentConfig={currentConfig} />
+      <ConfigForm
+        currentConfig={currentConfig}
+        selectedProfile={selectedProfile}
+        setSelectedProfile={setSelectedProfile}
+      />
       <main className="dashboard">
         <section className="generalSection">
-          <div className="profileSelector">
-            <label htmlFor="profile-select">PERFIL SENSORIAL:</label>
-            <select
-              id="profile-select"
-              value={selectedProfile}
-              onChange={(e) => setSelectedProfile(e.target.value)}
-            >
-              <option value="padrao">PADRÃO</option>
-              <option value="tea">TEA - HIPERSENSIBILIDADE</option>
-              <option value="tdah">TDAH - FOCO</option>
-            </select>
-            <p className="profileMessage">
-              Ajusta o nível de conforto de acordo com o perfil sensorial
-              selecionado.
-            </p>
-          </div>
           <div className="generalGauge">
             <GaugeChart
               value={generalMedia.currentValue}
