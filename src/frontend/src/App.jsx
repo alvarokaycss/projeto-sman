@@ -247,13 +247,13 @@ export function App() {
     const macDispositivo = "b4:bf:e9:0e:0c:08"; // MAC da ESP32
 
     fetch(
-      `http://${window.location.hostname}:3000/api/config/${macDispositivo}`,
+      `http://${window.location.hostname}:3000/api/config`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ mac_address: macDispositivo, ...payload }),
       },
     )
       .then((res) => {
