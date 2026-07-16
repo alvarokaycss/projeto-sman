@@ -8,23 +8,29 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
   const lowValue = Math.round((min * 100) / maxValue);
   const highValue = Math.round((max * 100) / maxValue);
 
-  const [isVisible, setIsVisible] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
+  const [renderKey, setRenderKey] = useState(0);
 
   useEffect(() => {
+    const mountTimer = setTimeout(() => {
+      setIsMounted(true);
+    }, 200);
+
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        setIsVisible(false);
-        setTimeout(() => setIsVisible(true), 50);
+        setRenderKey((prevKey) => prevKey + 1);
       }
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Limpeza padrão
     return () => {
+      clearTimeout(mountTimer);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
-  // Lógica de indicativo de conformidade dinâmico baseada nos limites reais do banco
   let statusText = "CONFORTÁVEL";
   let statusClass = style.statusIdeal;
   let subArcsConfig = [];
@@ -41,15 +47,13 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
       statusClass = style.statusAlerta;
     }
 
-
     const scoreLimitLow = Math.round((50 * 100) / maxValue);
     const scoreLimitHigh = Math.round((80 * 100) / maxValue);
     subArcsConfig = [
       { limit: scoreLimitLow, color: "#e51b54" },
       { limit: scoreLimitHigh, color: "#e7ff30" },
-      { color: "#52ff58" }
+      { color: "#52ff58" },
     ];
-
   } else if (metric === "Qualidade do Ar") {
     if (value <= 2) {
       statusText = "EXCELENTE";
@@ -67,12 +71,10 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
     subArcsConfig = [
       { limit: aqiLimit1, color: "#52ff58" },
       { limit: aqiLimit2, color: "#e7ff30" },
-      { color: "#e51b54" }
+      { color: "#e51b54" },
     ];
-
   } else {
-    // Para temperatura, umidade, CO2, ruído, luminosidade
-    // Usamos os limites reais passados de forma dinâmica pelo Postgres
+
     const isBaixo = min !== undefined && value < min;
     const isAlto = max !== undefined && value > max;
 
@@ -87,27 +89,24 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
       statusClass = style.statusIdeal;
     }
 
-    // Configuração de 3 zonas físicas reais:
-    // Zone 1: Abaixo do Mínimo de Conforto (Azul)
     const zone1 = Math.max(0, Math.min(lowValue, 98));
-    // Zone 2: Dentro da Faixa de Conforto (Verde)
     const zone2 = Math.max(zone1, Math.min(highValue, 99));
 
     subArcsConfig = [
-      { limit: zone1, color: "#052aa5ff" },
+      { limit: zone1, color: "rgb(15, 55, 188)" },
       { limit: zone2, color: "#52ff58" },
-      { color: "#e51b54" }
+      { color: "#e51b54" },
     ];
   }
 
   return (
     <div className={style.gaugeComponent}>
-
       <h1 className={style.metricLabel}>{metric}</h1>
 
       <div className={style.gaugeChart}>
-        {isVisible && (
+        {isMounted && (
           <GaugeComponent
+            key={renderKey}
             style={{ overflow: "visible" }}
             value={Math.round((value * 100) / maxValue)}
             type="grafana"
@@ -152,9 +151,7 @@ export function GaugeChart({ value, min, max, metric, symbol }) {
         </h1>
       </div>
 
-      <div className={`${style.statusText} ${statusClass}`}>
-        {statusText}
-      </div>
+      <div className={`${style.statusText} ${statusClass}`}>{statusText}</div>
     </div>
-  )
+  );
 }
